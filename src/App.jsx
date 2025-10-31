@@ -62,7 +62,6 @@ function App() {
   }
 
   const addToDo = () => {
-    console.log("Adicionando ToDo...");
     toggleDialog();
   }
 
