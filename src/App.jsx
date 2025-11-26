@@ -66,12 +66,12 @@ function App() {
   // Estado para armazenar a lista de tarefas
   const [todos, setTodos] = useState([]);
   
-  // Função para adicionar uma nova tarefa ao array
-  const addToDo = formData => {
+  // Função para adicionar uma nova tarefa ao array todos
+  const addToDo = (formData) => {
     // Obtém a descrição da nova tarefa a partir dos dados do formulário
     const description = formData.get('description');
     // Atualiza o estado do array de tarefas com a nova tarefa
-    setTodos(prevState => {
+    setTodos((prevState) => {
       const newToDo = {
         id: prevState.length + 1,
         description: description,
@@ -85,9 +85,8 @@ function App() {
 
   // Função para alternar o status de conclusão de uma tarefa
   const toggleToDoCompleted = (todo) => {
-    // Atualiza o estado do array de tarefas
-    setTodos(prevState => {
-      return prevState.map(t => {
+    setTodos((prevState) => {
+      return prevState.map((t) => {
         if (t.id == todo.id) {
           return {
             ...t, 
@@ -96,6 +95,12 @@ function App() {
         }
         return t
       })
+    })
+  }
+
+  const deleteTodo = (todo) => {
+    setTodos((prevState) => {
+      return prevState.filter((t) => t.id != todo.id)
     })
   }
 
@@ -111,15 +116,15 @@ function App() {
         <ChecklistsWrapper>
           <SubHeading>Para estudar</SubHeading>
           <ToDoList>
-            {todos.filter(t => !t.completed).map(function (t) {
-               return <ToDoItem key={t.id} item={t} onToggleCompleted={toggleToDoCompleted} />
-            })}
+            {todos.filter((t) => !t.completed).map((t) =>
+            <ToDoItem key={t.id} item={t} onToggleCompleted={toggleToDoCompleted} onDeleteTodo={deleteTodo}/>
+            )}
           </ToDoList>
           <SubHeading>Concluído</SubHeading>
           <ToDoList>
-            {todos.filter(t => t.completed).map(function (t) {
-              return <ToDoItem key={t.id} item={t} onToggleCompleted={toggleToDoCompleted}/>
-            })}
+            {todos.filter((t) => t.completed).map((t) =>
+              <ToDoItem key={t.id} item={t} onToggleCompleted={toggleToDoCompleted} onDeleteTodo={deleteTodo}/>
+            )}
           </ToDoList>
           <Footer>
             <Dialog isOpen={showDialog} onClose={toggleDialog}>
