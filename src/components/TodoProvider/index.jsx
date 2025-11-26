@@ -1,9 +1,15 @@
 import TodoContext from "./TodoContext";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 
 export function TodoProvider({ children }) {
 
-    const [todos, setTodos] = useState([]);
+    const savedTodos = localStorage.getItem('todos');
+    
+    const [todos, setTodos] = useState(savedTodos ? JSON.parse(savedTodos) : []);
+    
+    useEffect(()=>{
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos])
 
     const addToDo = (formData) => {
         const description = formData.get('description');
@@ -39,9 +45,10 @@ export function TodoProvider({ children }) {
     }
 
     return (
-        <TodoContext.Provider value={{ todos, addToDo, toggleToDoCompleted, deleteTodo }}>
+        <TodoContext
+            value={{ todos, addToDo, toggleToDoCompleted, deleteTodo }}>
             {children}
-        </TodoContext.Provider>
+        </TodoContext>
     )
 }
 

@@ -17,7 +17,7 @@ export function Dialog({ isOpen, onClose, children }) {
     useEffect(() => {
         if (isOpen) {
             openDialog();
-        } else if (onClose) {
+        } else {
             closeDialog();
         }
     }, [isOpen]);
