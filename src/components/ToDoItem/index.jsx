@@ -3,9 +3,9 @@ import { IconPencil, IconTrash } from "../icons";
 import TodoContext from '../TodoProvider/TodoContext';
 import { use } from 'react';
 
-export function ToDoItem ({ item }) {
+export function ToDoItem({ item }) {
 
-    const {toggleToDoCompleted, deleteTodo} = use(TodoContext);
+    const { toggleToDoCompleted, deleteTodo, openFormTodoDialog } = use(TodoContext);
 
     const styles = ['todo-item']
 
@@ -20,19 +20,21 @@ export function ToDoItem ({ item }) {
             </p>
             <div className="details">
                 <input
-                type="checkbox"
-                className="checkbox"
-                defaultChecked={item.completed}
-                onClick={() => {toggleToDoCompleted(item)}}
+                    type="checkbox"
+                    className="checkbox"
+                    defaultChecked={item.completed}
+                    onClick={() => { toggleToDoCompleted(item) }}
                 />
                 <p className="description">
                     {item.description}
                 </p>
                 <div className="actions">
-                    <button className="btn" onClick={() => deleteTodo(item)}>
+                    <button className="btn"
+                        onClick={() => deleteTodo(item)}>
                         <IconTrash />
                     </button>
-                    <button className="btn">
+                    <button className="btn"
+                        onClick={() => openFormTodoDialog(item)}>
                         <IconPencil />
                     </button>
                 </div>
